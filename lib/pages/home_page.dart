@@ -1,15 +1,13 @@
-import 'package:flutter/foundation.dart';
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/main.dart';
 import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/pages/search_page.dart';
 import '../providers/Weather_Provider.dart';
 
 class home_page extends StatefulWidget {
-  home_page({super.key});
+  const home_page({super.key});
 
   @override
   State<home_page> createState() => _home_pageState();
@@ -37,16 +35,16 @@ class _home_pageState extends State<home_page> {
                     );
               }));
             },
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           )
         ],
-        title: Text('Weather App'),
+        title: const Text('Weather App'),
       ),
       body: Provider.of<WeatherProvider>(context).weatherData == null
           ? Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: const [
                   Text(
                     "the weather is not good",
                     style: TextStyle(fontSize: 24),
@@ -73,25 +71,25 @@ class _home_pageState extends State<home_page> {
                   ),
                   Text(
                     Provider.of<WeatherProvider>(context).CityName!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     'update at : ${weatherData!.date.hour.toString()}:${weatherData!.date.minute.toString()}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 22,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Image.asset(weatherData!.getImage()),
                       Text(
                         "${weatherData!.temp.toInt()}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
                         ),
@@ -100,13 +98,13 @@ class _home_pageState extends State<home_page> {
                         children: [
                           Text(
                             "maxTemp:${weatherData!.maxtemp.toInt()} ",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                             ),
                           ),
                           Text(
                             "minTemp:${weatherData!.mintemp.toInt()}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                             ),
                           ),
@@ -114,15 +112,15 @@ class _home_pageState extends State<home_page> {
                       )
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     weatherData!.weatherstate,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Spacer(
+                  const Spacer(
                     flex: 5,
                   )
                 ],

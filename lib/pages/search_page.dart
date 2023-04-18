@@ -1,8 +1,7 @@
+// ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/main.dart';
 import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/providers/Weather_Provider.dart';
 
@@ -13,11 +12,13 @@ class search extends StatelessWidget {
   // VoidCallback? updateUi;
   String? CityName;
 
+  search({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Search a City"),
+        title: const Text("Search a City"),
       ),
       body: Center(
         child: Padding(
@@ -39,10 +40,10 @@ class search extends StatelessWidget {
               Navigator.pop(context);
             },
             decoration: InputDecoration(
-              label: Text("Search"),
+              label: const Text("Search"),
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 35, horizontal: 24),
-              border: OutlineInputBorder(),
+                  const EdgeInsets.symmetric(vertical: 35, horizontal: 24),
+              border: const OutlineInputBorder(),
               suffixIcon: GestureDetector(onTap: ()async {
                     WeatherServices services = WeatherServices();
               WeatherModels weather =
@@ -54,7 +55,7 @@ class search extends StatelessWidget {
               //updateUi!();
               Navigator.pop(context);
               },
-                child: Icon(Icons.search)),
+                child: const Icon(Icons.search)),
               hintText: "Please Enter a City",
             ),
           ),

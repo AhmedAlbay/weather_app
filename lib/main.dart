@@ -8,9 +8,10 @@ void main() {
       create: (BuildContext context) {
         return WeatherProvider();
       },
-      child: weather_app()));
+      child: const weather_app()));
 }
 
+// ignore: camel_case_types
 class weather_app extends StatelessWidget {
   const weather_app({super.key});
 
@@ -22,7 +23,7 @@ class weather_app extends StatelessWidget {
       ),
      
       debugShowCheckedModeBanner: false,
-      home: home_page(),
+      home: const home_page(),
     );
   }
 }
