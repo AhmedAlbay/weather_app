@@ -19,9 +19,10 @@ class weather_app extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-       primarySwatch: Provider.of<WeatherProvider>(context).weatherData == null ?  Colors.blue : Provider.of<WeatherProvider>(context).weatherData!.getcolor()  ,
+        primarySwatch: Provider.of<WeatherProvider>(context).weatherData == null
+            ? Colors.blue
+            : Provider.of<WeatherProvider>(context).weatherData!.getcolor(),
       ),
-     
       debugShowCheckedModeBanner: false,
       home: const home_page(),
     );
