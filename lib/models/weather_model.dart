@@ -1,64 +1,65 @@
 import 'package:flutter/material.dart';
 
-class WeatherModels {
+class WeatherModel {
   DateTime date;
-  double temp;
-  double maxtemp;
-  double mintemp;
-  String weatherstate;
-
-  WeatherModels(
+  String weatherStat;
+  String weatherIcon;
+  double maxTemp;
+  double minTemp;
+  double avgTemp;
+  WeatherModel(
       {required this.date,
-      required this.temp,
-      required this.maxtemp,
-      required this.mintemp,
-      required this.weatherstate});
-  factory WeatherModels.fromjson(dynamic data) {
-    var jsondata = data["forecast"]["forecastday"][0]["day"];
-    return WeatherModels(
-        date:DateTime.parse(data['current']['last_updated']),
-        temp: jsondata["avgtemp_c"],
-        maxtemp: jsondata["maxtemp_c"],
-        mintemp: jsondata["mintemp_c"],
-        weatherstate: jsondata["condition"]["text"]);
-  }
-  String getImage() {
-    if (weatherstate == 'Clear' || weatherstate == 'Light Cloud') {
-      return 'assets/images/clear.png';
-    } else if (weatherstate == 'Sleet' ||
-        weatherstate == 'Snow' ||
-        weatherstate == 'Hail') {
-      return 'assets/images/snow.png';
-    } else if (weatherstate == 'Light Rain' ||
-        weatherstate == 'Heavy Rain' ||
-        weatherstate == 'Showers') {
-      return 'assets/images/rainy.png';
-    } else if (weatherstate == 'Thunderstorm' || weatherstate == 'Thunder') {
-      return 'assets/images/thunderstorm.png';
-    } else if (weatherstate == 'Moderate rain') {
-      return 'assets/images/moderate.png';
-    } else {
-      return 'assets/images/clear.png';
-    }
-  } 
+      required this.weatherStat,
+      required this.weatherIcon,
+      required this.avgTemp,
+      required this.maxTemp,
+      required this.minTemp});
+  factory WeatherModel.fromJson(dynamic data) {
+    var jsonData = data['forecast']['forecastday'][0]['day'];
 
-  MaterialColor getcolor() {
-    if (weatherstate == 'Clear'||weatherstate=="Sunny" || weatherstate == 'Light Cloud') {
+    return WeatherModel(
+        date: DateTime.parse(data['current']['last_updated']),
+        weatherStat: jsonData['condition']['text'],
+        weatherIcon: jsonData['condition']['icon'],
+        avgTemp: jsonData['avgtemp_c'],
+        maxTemp: jsonData['maxtemp_c'],
+        minTemp: jsonData['mintemp_c']);
+  }
+  MaterialColor getThemeColor() {
+    if (weatherStat == 'Sunny' ||
+        weatherStat == 'Clear' ||
+        weatherStat == 'partly cloudy') {
       return Colors.orange;
-    } else if (weatherstate == 'Sleet' ||
-        weatherstate == 'Snow' ||
-        weatherstate == 'Hail') {
+    } else if (weatherStat == 'Blizzard' ||
+        weatherStat == 'Patchy snow possible' ||
+        weatherStat == 'Patchy sleet possible' ||
+        weatherStat == 'Patchy freezing drizzle possible' ||
+        weatherStat == 'Blowing snow') {
       return Colors.blue;
-    } else if (weatherstate == 'Light Rain' ||
-        weatherstate == 'Heavy Rain' ||
-        weatherstate == 'Showers') {
+    } else if (weatherStat == 'Freezing fog' ||
+        weatherStat == 'Fog' ||
+        weatherStat == 'Heavy Cloud' ||
+        weatherStat == 'Mist' ||
+        weatherStat == 'Fog') {
       return Colors.blueGrey;
-    } else if (weatherstate == 'Thunderstorm' || weatherstate == 'Thunder') {
+    } else if (weatherStat == 'Patchy rain possible' ||
+        weatherStat == 'Heavy Rain' ||
+        weatherStat == 'Showers' ||
+        weatherStat == 'Overcast') {
       return Colors.blue;
-    } else if (weatherstate == 'Moderate rain') {
-      return Colors.blue;
+    } else if (weatherStat == 'Thundery outbreaks possible' ||
+        weatherStat == 'Moderate or heavy snow with thunder' ||
+        weatherStat == 'Patchy light snow with thunder' ||
+        weatherStat == 'Moderate or heavy rain with thunder' ||
+        weatherStat == 'Patchy light rain with thunder') {
+      return Colors.deepPurple;
     } else {
-      return Colors.blue;
+      return Colors.orange;
     }
+  }
+
+  @override
+  String toString() {
+    return '{$date $avgTemp $weatherStat}';
   }
 }

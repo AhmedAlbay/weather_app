@@ -1,66 +1,63 @@
-// ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names, use_build_context_synchronously
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/models/weather_model.dart';
-import 'package:weather_app/providers/Weather_Provider.dart';
 
+import '../cubits/weather_cubits/weather_cubit.dart';
+import '../models/weather_model.dart';
+import '../providers/Weather_Provider.dart';
 import '../services/weather_services.dart';
 
-class search extends StatelessWidget {
-  // search({this.updateUi});
-  // VoidCallback? updateUi;
-  String? CityName;
+class SearchScreen extends StatelessWidget {
+  String? cityName;
 
-  search({super.key});
+  SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Search a City"),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: TextField(
-            onChanged: (data) {
-              CityName = data;
-            },
-            onSubmitted: (data) async {
-              CityName = data;
-              WeatherServices services = WeatherServices();
-              WeatherModels weather =
-                  await services.getWeather(CityName: CityName!);
-              Provider.of<WeatherProvider>(context, listen: false).weatherData =
-                  weather;
-              Provider.of<WeatherProvider>(context, listen: false).CityName =
-                  CityName;
-              //updateUi!();
-              Navigator.pop(context);
-            },
-            decoration: InputDecoration(
-              label: const Text("Search"),
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 35, horizontal: 24),
-              border: const OutlineInputBorder(),
-              suffixIcon: GestureDetector(onTap: ()async {
-                    WeatherServices services = WeatherServices();
-              WeatherModels weather =
-                  await services.getWeather(CityName: CityName!);
-              Provider.of<WeatherProvider>(context, listen: false).weatherData =
-                  weather;
-              Provider.of<WeatherProvider>(context, listen: false).CityName =
-                  CityName;
-              //updateUi!();
-              Navigator.pop(context);
+        appBar: AppBar(
+          title: const Text('Search a City'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              onChanged: (data) {
+                cityName = data;
               },
-                child: const Icon(Icons.search)),
-              hintText: "Please Enter a City",
+              onSubmitted: (data) async {
+                cityName = data;
+                BlocProvider.of<WeatherCubit>(context)
+                    .getWeather(cityName: cityName!);
+                BlocProvider.of<WeatherCubit>(context).cityName = cityName;
+                Navigator.pop(context);
+              },
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                label: const Text('Search'),
+                hintText: 'Enter City Name',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.search_rounded),
+                  onPressed: () async {
+                    WeatherService service = WeatherService();
+                    WeatherModel? weatherModel =
+                        await service.getWeather(cityName: cityName!);
+                    Provider.of<WeatherProvider>(context, listen: false)
+                        .cityName = cityName;
+                    Provider.of<WeatherProvider>(context, listen: false)
+                        .weatherModel = weatherModel;
+                    Navigator.pop(context);
+                  },
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 32.0,
+                  horizontal: 24.0,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
